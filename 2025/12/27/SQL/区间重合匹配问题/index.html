@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blogs.ykyk.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="问题描述![[source&#x2F;attachments&#x2F;Pasted image 20251231111953.png]] 从一系列连续区间中，检索出与指定区间 $A$ 有重叠的部分。 示例： 区间组：1-5, 6-20, 21-40, 41-58 目标 $A$：15-30 结果：6-20, 21-40 （因其与 $A$ 存在范围重合） 使用 start 和 stop 就可以表示一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="未命名">
+<meta property="og:url" content="https://blogs.ykyk.one/2025/12/27/SQL/%E5%8C%BA%E9%97%B4%E9%87%8D%E5%90%88%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="dongka blogs">
+<meta property="og:description" content="问题描述![[source&#x2F;attachments&#x2F;Pasted image 20251231111953.png]] 从一系列连续区间中，检索出与指定区间 $A$ 有重叠的部分。 示例： 区间组：1-5, 6-20, 21-40, 41-58 目标 $A$：15-30 结果：6-20, 21-40 （因其与 $A$ 存在范围重合） 使用 start 和 stop 就可以表示一">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-12-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T03:40:22.337Z">
+<meta property="article:author" content="DongKa">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blogs.ykyk.one/2025/12/27/SQL/%E5%8C%BA%E9%97%B4%E9%87%8D%E5%90%88%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>未命名 | dongka blogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dongka blogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blogs.ykyk.one/2025/12/27/SQL/%E5%8C%BA%E9%97%B4%E9%87%8D%E5%90%88%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DongKa">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dongka blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          未命名
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-28 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-28T00:00:00+08:00">2025-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-31 11:40:22" itemprop="dateModified" datetime="2025-12-31T11:40:22+08:00">2025-12-31</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>![[source&#x2F;attachments&#x2F;Pasted image 20251231111953.png]]</p>
+<p>从一系列连续区间中，检索出与指定区间 $A$ 有重叠的部分。</p>
+<p>示例：</p>
+<p>区间组：<code>1-5</code>, <code>6-20</code>, <code>21-40</code>, <code>41-58</code></p>
+<p>目标 $A$：<code>15-30</code></p>
+<p>结果：<code>6-20</code>, <code>21-40</code> （因其与 $A$ 存在范围重合）</p>
+<p>使用 <code>start</code> 和 <code>stop</code> 就可以表示一个区间,但我这里增加了<code>gap</code>,  可以把<code>gap</code>当做当前行的一个”数值”, 例如数量或金额, 这样<code>stop</code>就可以看做是累计的数量或金额.</p>
+<p>同时采用另外的写法将<code>A</code>写入了<code>#con</code>临时表.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> t1  </span><br><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">TABLE</span> t1 (  </span><br><span class="line">    gap <span class="type">int</span>,  </span><br><span class="line">    <span class="keyword">start</span> <span class="type">int</span>,  </span><br><span class="line">    stop <span class="type">int</span>  </span><br><span class="line">  </span><br><span class="line">)  </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span> (<span class="number">5</span>,<span class="number">1</span>,<span class="number">5</span>);  </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span> (<span class="number">15</span>,<span class="number">6</span>,<span class="number">20</span>);  </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span> (<span class="number">20</span>,<span class="number">21</span>,<span class="number">40</span>);  </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span> (<span class="number">18</span>,<span class="number">41</span>,<span class="number">58</span>); </span><br><span class="line">  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>  <span class="keyword">FROM</span> t1</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">into</span> #con <span class="keyword">FROM</span> (<span class="keyword">values</span>(<span class="number">15</span>,<span class="number">30</span>)) <span class="keyword">as</span> a(<span class="keyword">start</span>,stop)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> #con</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h1><p>这是一种朴素的方法. <code>a.stop</code> &gt;&#x3D; 任意子区间的<code>start</code>, <code>a.start</code> &lt;&#x3D;任意子区间的 <code>stop</code>.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.<span class="operator">*</span>, <span class="string">&#x27;###&#x27;</span><span class="keyword">as</span> line , t1.<span class="operator">*</span>  <span class="keyword">FROM</span> t1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> #con a <span class="keyword">ON</span> a.stop <span class="operator">&gt;=</span> t1.start <span class="keyword">and</span>  a.start <span class="operator">&lt;=</span>t1.stop</span><br></pre></td></tr></table></figure>
+
+<p>图像可以表示, A必须”卡住”t1 ,才能符合要求, 如果没有”卡住”, 那么表示不重合.<br>![[26094818-37a8-4bf8-b04c-a040209b3dd0.gif]]</p>
+<p>同理我们可以得知, 以下两种不重合的情况需要排除.</p>
+<ol>
+<li><p>t1完全在A的左边<br>![[Pasted image 20251230220423.png]]</p>
+</li>
+<li><p>t1完全在A的右边<br>![[Pasted image 20251230215642.png]]</p>
+</li>
+</ol>
+<p>这时我们观察<code>a.stop-t1.stop</code>, 它的大小必须介于 <code>-t1.gap</code>和 <code>a.gap</code> 之间, 为什么是<code>-t1.gap</code>, 因为在t1完全在A的右边的情况,  <code>a.stop-t1.stop</code>相减为负数.</p>
+<p>这种写法只用到了<code>gap</code>和<code>stop</code> , 即当前的数值和累计数值, 更贴合实际.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">SELECT</span> a.<span class="operator">*</span>, <span class="string">&#x27;###&#x27;</span><span class="keyword">as</span> line , t1.<span class="operator">*</span>  <span class="keyword">FROM</span> t1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> #con a <span class="keyword">ON</span> a.stop <span class="operator">-</span> t1.stop <span class="keyword">BETWEEN</span> <span class="operator">-</span>t1.gep <span class="keyword">and</span> a.gep</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题:"></a>例题:</h1><p>将发票金额依次分配给收款单</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> T20211112A  </span><br><span class="line">(  </span><br><span class="line">    name  <span class="type">varchar</span>(<span class="number">5</span>),  </span><br><span class="line">    ttype <span class="type">varchar</span>(<span class="number">10</span>),  </span><br><span class="line">    val   <span class="type">int</span>  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票1&#x27;</span>, <span class="number">2340</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票2&#x27;</span>, <span class="number">4680</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票3&#x27;</span>, <span class="number">1170</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票4&#x27;</span>, <span class="number">2340</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票5&#x27;</span>, <span class="number">11700</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;发票6&#x27;</span>, <span class="number">2870</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;发票1&#x27;</span>, <span class="number">2340</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;发票2&#x27;</span>, <span class="number">4680</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;发票3&#x27;</span>, <span class="number">1170</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;发票4&#x27;</span>, <span class="number">2340</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112A <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;发票5&#x27;</span>, <span class="number">11700</span>);  </span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> T20211112B  </span><br><span class="line">(  </span><br><span class="line">    name  <span class="type">varchar</span>(<span class="number">5</span>),  </span><br><span class="line">    ttype <span class="type">varchar</span>(<span class="number">10</span>),  </span><br><span class="line">    val   <span class="type">int</span>  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;收款单1&#x27;</span>, <span class="number">100</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;收款单2&#x27;</span>, <span class="number">3000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;收款单3&#x27;</span>, <span class="number">5000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;收款单4&#x27;</span>, <span class="number">7000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;收款单5&#x27;</span>, <span class="number">10000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;收款单1&#x27;</span>, <span class="number">100</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;收款单2&#x27;</span>, <span class="number">3000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;收款单3&#x27;</span>, <span class="number">5000</span>);  </span><br><span class="line"><span class="keyword">INSERT</span>  <span class="keyword">INTO</span> T20211112B <span class="keyword">VALUES</span> (<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;收款单4&#x27;</span>, <span class="number">7000</span>);  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> T20211112A  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> T20211112B;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span>,  </span><br><span class="line">       IIF(a.累计发票金额 <span class="operator">&gt;=</span> b.累计收款金额, b.累计收款金额 <span class="operator">-</span> (累计发票金额 <span class="operator">-</span> a.val), a.累计发票金额 <span class="operator">-</span> IIF(  </span><br><span class="line">              (累计发票金额 <span class="operator">-</span> a.val) <span class="operator">&lt;</span> (b.累计收款金额 <span class="operator">-</span> b.val), b.累计收款金额 <span class="operator">-</span> b.val, 累计发票金额 <span class="operator">-</span> a.val)),  </span><br><span class="line">  </span><br><span class="line">       IIF(a.累计发票金额 <span class="operator">&lt;</span> b.累计收款金额, a.累计发票金额, b.累计收款金额) <span class="operator">-</span>  </span><br><span class="line">       IIF((a.累计发票金额 <span class="operator">-</span> a.val) <span class="operator">&gt;</span> (b.累计收款金额 <span class="operator">-</span> b.val), (a.累计发票金额 <span class="operator">-</span> a.val), (b.累计收款金额 <span class="operator">-</span> b.val))  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">SUM</span>(val) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> name <span class="keyword">ORDER</span> <span class="keyword">BY</span> ttype) <span class="keyword">AS</span> <span class="string">&#x27;累计发票金额&#x27;</span> <span class="keyword">FROM</span> T20211112A) a  </span><br><span class="line">       <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">SUM</span>(val) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> name <span class="keyword">ORDER</span> <span class="keyword">BY</span> ttype) <span class="keyword">AS</span> <span class="string">&#x27;累计收款金额&#x27;</span> <span class="keyword">FROM</span> T20211112B) b  </span><br><span class="line">                 <span class="keyword">ON</span> a.name <span class="operator">=</span> b.name <span class="keyword">AND</span> 累计发票金额 <span class="operator">-</span> 累计收款金额 <span class="keyword">BETWEEN</span> <span class="operator">-</span> b.val <span class="keyword">AND</span> a.val  </span><br><span class="line">                 <span class="comment">-- on a.name = b.name AND a.累计发票金额 &gt;= b.累计收款金额 - b.val AND 累计发票金额 - a.val  &lt;= 累计收款金额  </span></span><br><span class="line">   <span class="keyword">ORDER</span> <span class="keyword">BY</span> a.name, a.ttype, b.ttype</span><br></pre></td></tr></table></figure>
+
+<p>on的两种写法对应上面的两种方法.</p>
+<p>1 . val 看作是gap, 累计看作stop , 则start&#x3D;累计-val</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ON</span>  a.name <span class="operator">=</span> b.name <span class="keyword">AND</span> a.累计发票金额 <span class="operator">&gt;=</span> b.累计收款金额 <span class="operator">-</span> b.val <span class="keyword">AND</span> 累计发票金额 <span class="operator">-</span> a.val  <span class="operator">&lt;=</span> 累计收款金额 </span><br><span class="line"><span class="comment">--对应</span></span><br><span class="line"><span class="keyword">ON</span> a.stop <span class="operator">&gt;=</span> t1.start <span class="keyword">and</span>  a.start <span class="operator">&lt;=</span>t1.stop</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ON</span> a.name <span class="operator">=</span> b.name <span class="keyword">AND</span> 累计发票金额 <span class="operator">-</span> 累计收款金额 <span class="keyword">BETWEEN</span> <span class="operator">-</span> b.val <span class="keyword">AND</span> a.val  </span><br><span class="line"></span><br><span class="line"><span class="comment">--对应</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ON</span> a.stop <span class="operator">-</span> t1.stop <span class="keyword">BETWEEN</span> <span class="operator">-</span>t1.gep <span class="keyword">and</span> a.gep</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>IIF来计算每次分配的金额. 这里有两种写法,</p>
+<ol>
+<li>第一种的思路是当a.累计发票金额 &gt;&#x3D; b.累计收款金额, 说明目前的钱够分配, 应分配的金额为累计收款金额  - 上一次的结算点, 通过累计发票金额 - a.val得到上一次的累计发票金额,即上一次的结算点</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">IIF(a.累计发票金额 <span class="operator">&gt;=</span> b.累计收款金额,</span><br><span class="line"> b.累计收款金额 <span class="operator">-</span> (累计发票金额 <span class="operator">-</span> a.val),</span><br><span class="line">  a.累计发票金额 <span class="operator">-</span> IIF((累计发票金额 <span class="operator">-</span> a.val) <span class="operator">&lt;</span> (b.累计收款金额 <span class="operator">-</span> b.val), b.累计收款金额 <span class="operator">-</span> b.val, 累计发票金额 <span class="operator">-</span> a.val)),  </span><br><span class="line"> </span><br><span class="line">     </span><br></pre></td></tr></table></figure>
+<p>当条件false时, 即a.累计发票金额 &lt; b.累计收款金额, 说明钱不够分配, 那应该能分配多少就分配多少, 这里还要分两种情况, 一个是上一次分配完还留了点, 加上这次自己全部的钱也不够,这种情况分配这次全部的钱, 即a.val 这里最后是通过 a.累计发票金额 - (累计发票金额 - a.val) 得到的a.val</p>
+<p>![[Pasted image 20251230225927.png]]</p>
+<p>还有一种情况是上一次没有分配够, 这次需要补上, 分配的钱就是累计发票金额 - 上一次的累计收款金额</p>
+<p>![[Pasted image 20251230230007.png]]</p>
+<p>这两种子情况本质上是用累计发票金额 - MAX( 上一次的累计收款金额, 上一次的累计发票金额, ) SQL server 2019 没有求两个值的MAX函数, 所以用了IFF替代.</p>
+<ol start="2">
+<li>这个的思路是每次应分配的钱是两个区间的重合部分. 比较简单,  MIN(这次) - MAX(上一次) <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">IIF(a.累计发票金额 <span class="operator">&lt;</span> b.累计收款金额, a.累计发票金额, b.累计收款金额) <span class="operator">-</span>  </span><br><span class="line">      IIF((a.累计发票金额 <span class="operator">-</span> a.val) <span class="operator">&gt;</span> (b.累计收款金额 <span class="operator">-</span> b.val), (a.累计发票金额 <span class="operator">-</span> a.val), (b.累计收款金额 <span class="operator">-</span> b.val))</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/14/SQL/%E9%80%92%E5%BD%92CTE/" rel="prev" title="递归CTE">
+      <i class="fa fa-chevron-left"></i> 递归CTE
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/31/Django/Django/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-number">2.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DongKa</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DongKa</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

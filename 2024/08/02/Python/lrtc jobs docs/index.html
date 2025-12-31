@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blogs.ykyk.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="虚拟环境与包管理器虚拟环境与包管理器 目前不是关键, 使用 Pycharm 选择 virtualenv 使用即可. Docs生成文档 选择使用 sphinx. 使用 autosummary 把每个类写上来. 12345678910111213141516171819202122232425# conf.pyextensions &#x3D; [&#x27;myst_parser&#x27;, &#x27;s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lrtc jobs docs">
+<meta property="og:url" content="https://blogs.ykyk.one/2024/08/02/Python/lrtc%20jobs%20docs/index.html">
+<meta property="og:site_name" content="dongka blogs">
+<meta property="og:description" content="虚拟环境与包管理器虚拟环境与包管理器 目前不是关键, 使用 Pycharm 选择 virtualenv 使用即可. Docs生成文档 选择使用 sphinx. 使用 autosummary 把每个类写上来. 12345678910111213141516171819202122232425# conf.pyextensions &#x3D; [&#x27;myst_parser&#x27;, &#x27;s">
+<meta property="og:locale">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241105202541.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241105203044.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241105202913.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240803213248.png">
+<meta property="article:published_time" content="2024-08-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T03:40:22.337Z">
+<meta property="article:author" content="DongKa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241105202541.png">
+
+<link rel="canonical" href="https://blogs.ykyk.one/2024/08/02/Python/lrtc%20jobs%20docs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>lrtc jobs docs | dongka blogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dongka blogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blogs.ykyk.one/2024/08/02/Python/lrtc%20jobs%20docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DongKa">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dongka blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lrtc jobs docs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-03 00:00:00" itemprop="dateCreated datePublished" datetime="2024-08-03T00:00:00+08:00">2024-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-31 11:40:22" itemprop="dateModified" datetime="2025-12-31T11:40:22+08:00">2025-12-31</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="虚拟环境与包管理器"><a href="#虚拟环境与包管理器" class="headerlink" title="虚拟环境与包管理器"></a>虚拟环境与包管理器</h1><p><a href="%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8.md">虚拟环境与包管理器</a></p>
+<p>目前不是关键, 使用 Pycharm 选择 virtualenv 使用即可.</p>
+<h1 id="Docs"><a href="#Docs" class="headerlink" title="Docs"></a>Docs</h1><p><a href="%E7%94%9F%E6%88%90%E6%96%87%E6%A1%A3.md">生成文档</a></p>
+<p>选择使用 sphinx. 使用 autosummary 把每个类写上来.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># conf.py</span></span><br><span class="line"></span><br><span class="line">extensions = [<span class="string">&#x27;myst_parser&#x27;</span>, <span class="string">&#x27;sphinx.ext.autodoc&#x27;</span>, <span class="string">&#x27;sphinx.ext.autosummary&#x27;</span>, <span class="string">&#x27;sphinx.ext.napoleon&#x27;</span>]  </span><br><span class="line">  </span><br><span class="line">templates_path = [<span class="string">&#x27;_templates&#x27;</span>]  </span><br><span class="line">exclude_patterns = [<span class="string">&#x27;_build&#x27;</span>, <span class="string">&#x27;Thumbs.db&#x27;</span>, <span class="string">&#x27;.DS_Store&#x27;</span>]  </span><br><span class="line">language = <span class="string">&#x27;zh_CN&#x27;</span>  </span><br><span class="line"></span><br><span class="line">html_theme = <span class="string">&#x27;pydata_sphinx_theme&#x27;</span>  </span><br><span class="line">html_static_path = [<span class="string">&#x27;_static&#x27;</span>]  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># pydata_sphinx_theme  </span></span><br><span class="line">html_theme_options = &#123;  </span><br><span class="line">    <span class="string">&quot;show_nav_level&quot;</span>: <span class="number">4</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 递归的将src中的目录加到sys.path  </span></span><br><span class="line">sys.path.extend([<span class="built_in">str</span>(i.resolve()) <span class="keyword">for</span> i <span class="keyword">in</span> Path(<span class="string">&quot;./../src&quot;</span>).glob(<span class="string">&quot;**&quot;</span>) <span class="keyword">if</span> i.is_dir()])  </span><br><span class="line"><span class="comment"># sys.path.insert(0, os.path.abspath(&quot;./../src&quot;))  </span></span><br><span class="line">  </span><br><span class="line">autosummary_imported_members = <span class="literal">False</span>  </span><br><span class="line">autosummary_generate = <span class="literal">True</span>  </span><br><span class="line">  </span><br><span class="line">add_module_names = <span class="literal">False</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义-autosummary-模板"><a href="#自定义-autosummary-模板" class="headerlink" title="自定义 autosummary 模板"></a>自定义 autosummary 模板</h2><p>将<code>venv/lib/python3.12/site-packages/sphinx/ext/autosummary/templates/autosummary</code><br>里面的rst文件复制到<code>docs/_templates/autosummary</code>里</p>
+<p><img src="/../../attachments/Pasted%20image%2020241105202541.png"></p>
+<p>此路径为autosummary默认使用的模板, 也可以用<code>:templates:</code> 指定模板</p>
+<p>修改<code>module.rst</code> 开头的标题影响网页侧边导航栏:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; fullname | escape | underline&#125;</span><br><span class="line">改为</span><br><span class="line">&#123;&#123; name | escape | underline&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>改前:<br><img src="/../../attachments/Pasted%20image%2020241105203044.png"><br>改后:<br><img src="/../../attachments/Pasted%20image%2020241105202913.png"></p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># API Reference  </span></span><br><span class="line">  </span><br><span class="line">this is API guide.  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="code">```&#123;eval-rst&#125;  </span></span><br><span class="line"><span class="code">.. autosummary::</span></span><br><span class="line"><span class="code">   :toctree:</span></span><br><span class="line"><span class="code">   :recursive:</span></span><br><span class="line"><span class="code">   </span></span><br><span class="line"><span class="code">   work_engine</span></span><br><span class="line"><span class="code"></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Code-Style"><a href="#Code-Style" class="headerlink" title="Code Style"></a>Code Style</h1><p>参考Google python style<br><a target="_blank" rel="noopener" href="https://google.github.io/styleguide/pyguide.html">https://google.github.io/styleguide/pyguide.html</a></p>
+<p>需要把 Pycharm 中的 Docstring 设置成 Google 风格.<br><img src="/../../attachments/Pasted%20image%2020240803213248.png"></p>
+<p>大体为类和异常大驼峰, 全局常量全大写下划线, 其他的像包,模块都是小写下划线.</p>
+<h1 id="Bulid-Steps"><a href="#Bulid-Steps" class="headerlink" title="Bulid Steps"></a>Bulid Steps</h1><h2 id="sphinx"><a href="#sphinx" class="headerlink" title="sphinx"></a>sphinx</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install phinx</span><br><span class="line">pip install pydata-sphinx-theme</span><br><span class="line">pip install myst-parser</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># conf.py</span></span><br><span class="line"></span><br><span class="line">extensions = [<span class="string">&#x27;myst_parser&#x27;</span>, <span class="string">&#x27;sphinx.ext.autodoc&#x27;</span>, <span class="string">&#x27;sphinx.ext.autosummary&#x27;</span>, <span class="string">&#x27;sphinx.ext.napoleon&#x27;</span>]</span><br><span class="line"></span><br><span class="line">html_theme = <span class="string">&#x27;pydata_sphinx_theme&#x27;</span>  </span><br><span class="line">html_static_path = [<span class="string">&#x27;_static&#x27;</span>]  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># pydata_sphinx_theme  </span></span><br><span class="line">html_theme_options = &#123;  </span><br><span class="line">    <span class="string">&quot;show_nav_level&quot;</span>: <span class="number">4</span>  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 递归的将src中的目录加到sys.path  </span></span><br><span class="line">sys.path.extend([<span class="built_in">str</span>(i.resolve()) <span class="keyword">for</span> i <span class="keyword">in</span> Path(<span class="string">&quot;./../src&quot;</span>).glob(<span class="string">&quot;**&quot;</span>) <span class="keyword">if</span> i.is_dir()])  </span><br><span class="line"><span class="comment"># sys.path.insert(0, os.path.abspath(&quot;./../src&quot;))  </span></span><br><span class="line">  </span><br><span class="line">autosummary_imported_members = <span class="literal">False</span>  </span><br><span class="line">autosummary_generate = <span class="literal">True</span>  </span><br><span class="line">add_module_names = <span class="literal">False</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">index.md</span><br><span class="line"><span class="code">```&#123;eval-rst&#125;  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">* :ref:`genindex`  </span></span><br><span class="line"><span class="code">* :ref:`modindex`  </span></span><br><span class="line"><span class="code">* :ref:`search`  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">.. toctree::  </span></span><br><span class="line"><span class="code">   :maxdepth: 2  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">   job_guide/index  </span></span><br><span class="line"><span class="code">   user_guide/index  </span></span><br><span class="line"><span class="code">   developer_guide/index  </span></span><br><span class="line"><span class="code">   api_reference/index  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">  </span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp; make html</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/20/Linux/%E5%AD%97%E4%BD%93/" rel="prev" title="字体">
+      <i class="fa fa-chevron-left"></i> 字体
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/04/Python/API%E5%B1%82%E7%BA%A7%E5%92%8C%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" rel="next" title="API层级和项目结构">
+      API层级和项目结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">虚拟环境与包管理器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docs"><span class="nav-number">2.</span> <span class="nav-text">Docs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-autosummary-%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.1.</span> <span class="nav-text">自定义 autosummary 模板</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Style"><span class="nav-number">3.</span> <span class="nav-text">Code Style</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bulid-Steps"><span class="nav-number">4.</span> <span class="nav-text">Bulid Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sphinx"><span class="nav-number">4.1.</span> <span class="nav-text">sphinx</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DongKa</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DongKa</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

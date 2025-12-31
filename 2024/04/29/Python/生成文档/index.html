@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blogs.ykyk.one","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="mkdocs导航栏自动首字母大写, 实在难绷. 以后再考虑 sphinx每次构建前应该使用make clean清空 build 目录,不要单独使用make html 1make clean &amp; make html   并且上面的命令已经包含sphinx-autogen 主题目前看 pydata 主题不错, 和pandas文档一样. 123pip install pydata-sphinx-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成文档">
+<meta property="og:url" content="https://blogs.ykyk.one/2024/04/29/Python/%E7%94%9F%E6%88%90%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="dongka blogs">
+<meta property="og:description" content="mkdocs导航栏自动首字母大写, 实在难绷. 以后再考虑 sphinx每次构建前应该使用make clean清空 build 目录,不要单独使用make html 1make clean &amp; make html   并且上面的命令已经包含sphinx-autogen 主题目前看 pydata 主题不错, 和pandas文档一样. 123pip install pydata-sphinx-">
+<meta property="og:locale">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240717220235.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240430162652.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240430172954.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240430175105.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240723231116.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241112225052.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241112225116.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241113003233.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241113003322.png">
+<meta property="og:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020241125221715.png">
+<meta property="article:published_time" content="2024-04-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T03:40:22.337Z">
+<meta property="article:author" content="DongKa">
+<meta property="article:tag" content="sphinx">
+<meta property="article:tag" content="mkdocs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogs.ykyk.one/attachments/Pasted%20image%2020240717220235.png">
+
+<link rel="canonical" href="https://blogs.ykyk.one/2024/04/29/Python/%E7%94%9F%E6%88%90%E6%96%87%E6%A1%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>生成文档 | dongka blogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">dongka blogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blogs.ykyk.one/2024/04/29/Python/%E7%94%9F%E6%88%90%E6%96%87%E6%A1%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DongKa">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dongka blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          生成文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-30 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-30T00:00:00+08:00">2024-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-31 11:40:22" itemprop="dateModified" datetime="2025-12-31T11:40:22+08:00">2025-12-31</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="mkdocs"><a href="#mkdocs" class="headerlink" title="mkdocs"></a>mkdocs</h1><p>导航栏自动首字母大写, 实在难绷. 以后再考虑</p>
+<h1 id="sphinx"><a href="#sphinx" class="headerlink" title="sphinx"></a>sphinx</h1><p>每次构建前应该使用<code>make clean</code>清空 build 目录,不要单独使用<code>make html</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp; make html</span><br></pre></td></tr></table></figure>
+
+
+<p>并且上面的命令已经包含sphinx-autogen</p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>目前看 pydata 主题不错, 和pandas文档一样.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pydata-sphinx-theme</span><br><span class="line"></span><br><span class="line">html_theme = &quot;pydata_sphinx_theme&quot;</span><br></pre></td></tr></table></figure>
+
+
+<p>留意pydata主页的提示, 以下两个主题有必要尝试. 尝试后发现这两个主题都是全部将模块显示在侧边的. 没有常规网页顶部的导航栏</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pip install furo</span><br><span class="line"></span><br><span class="line">html_theme = &quot;furo&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install sphinx-book-theme </span><br><span class="line"></span><br><span class="line">html_theme = &quot;sphinx_book_theme&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<p><img src="/../../attachments/Pasted%20image%2020240717220235.png"></p>
+<h2 id="启用md"><a href="#启用md" class="headerlink" title="启用md"></a>启用md</h2><p><a target="_blank" rel="noopener" href="https://www.sphinx-doc.org/en/master/usage/markdown.html">https://www.sphinx-doc.org/en/master/usage/markdown.html</a></p>
+<p>使用md ,并且要插入sphinx rst语法时, 使用<code>&#123;eval-rst&#125;</code>前缀</p>
+<p><img src="/../../attachments/Pasted%20image%2020240430162652.png"><br><a target="_blank" rel="noopener" href="https://myst-parser.readthedocs.io/en/v0.15.1/sphinx/index.html">https://myst-parser.readthedocs.io/en/v0.15.1/sphinx/index.html</a></p>
+<p>在 conf.py 启用<code>sphinx.ext.napoleon</code>插件, 支持google 风格docstring.</p>
+<p><img src="/../../attachments/Pasted%20image%2020240430172954.png"></p>
+<p>指明 src路径:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># conf.py</span></span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.abspath(<span class="string">&#x27;./../../src&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>显示特殊方法 <code>__init__</code> 空着是特殊方法全部显示<br><img src="/../../attachments/Pasted%20image%2020240430175105.png"></p>
+<p>可以加到<code>autodoc_default_options</code> 里, 变成默认显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># conf.py</span><br><span class="line"></span><br><span class="line">autodoc_default_options = &#123;  </span><br><span class="line">    &#x27;ignore-module-all&#x27;: True,  </span><br><span class="line">    &quot;special-members&quot;: &quot;__init__&quot;,  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="sphinx-apidoc"><a href="#sphinx-apidoc" class="headerlink" title="sphinx-apidoc"></a>sphinx-apidoc</h1><p><a target="_blank" rel="noopener" href="https://www.sphinx-doc.org/zh-cn/master/man/sphinx-apidoc.html">https://www.sphinx-doc.org/zh-cn/master/man/sphinx-apidoc.html</a></p>
+<p>sphinx-apidoc -f  -o docs&#x2F;api src&#x2F;WorkEngine  </p>
+<p>-f 强制覆盖</p>
+<p>conf.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 递归的将src中的目录加到sys.path  </span></span><br><span class="line">sys.path.extend([<span class="built_in">str</span>(i.resolve()) <span class="keyword">for</span> i <span class="keyword">in</span> Path(<span class="string">&quot;./../src&quot;</span>).glob(<span class="string">&quot;**&quot;</span>) <span class="keyword">if</span> i.is_dir()])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>api&#x2F;index.md</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># API Reference  </span></span><br><span class="line">  </span><br><span class="line">this is API guide.  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="code">```&#123;eval-rst&#125;  </span></span><br><span class="line"><span class="code">.. toctree::  </span></span><br><span class="line"><span class="code">   :maxdepth: 2</span></span><br><span class="line"><span class="code">   </span></span><br><span class="line"><span class="code">   modules  </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># mock</span><br><span class="line">https://www.sphinx-doc.org/zh-cn/master/usage/extensions/autodoc.html#confval-autodoc_mock_imports</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># autosmmary</span><br><span class="line"></span><br><span class="line">![](../../attachments/Pasted%20image%2020240718185111.png)</span><br><span class="line">当开启recursive 循环导入选项时, 事情会变的复杂, 代码当中的import语句顺序也会影响生成结果,  生成时代码会运行, 各种导入的变量方法名冲突</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 方法1: 使用autosummary</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"># conf.py</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">extensions = [&#x27;myst_parser&#x27;, &#x27;sphinx.ext.autodoc&#x27;, &#x27;sphinx.ext.autosummary&#x27;, &#x27;sphinx.ext.napoleon&#x27;]  </span><br><span class="line">  </span><br><span class="line">templates_path = [&#x27;_templates&#x27;]  </span><br><span class="line">exclude_patterns = [&#x27;_build&#x27;, &#x27;Thumbs.db&#x27;, &#x27;.DS_Store&#x27;]  </span><br><span class="line">language = &#x27;zh_CN&#x27;  </span><br><span class="line"></span><br><span class="line">html_theme = &#x27;pydata_sphinx_theme&#x27;  </span><br><span class="line">html_static_path = [&#x27;_static&#x27;]  </span><br><span class="line">  </span><br><span class="line"># pydata_sphinx_theme  </span><br><span class="line">html_theme_options = &#123;  </span><br><span class="line">    &quot;show_nav_level&quot;: 4  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"># 递归的将src中的目录加到sys.path  </span><br><span class="line">sys.path.extend([str(i.resolve()) for i in Path(&quot;./../src&quot;).glob(&quot;**&quot;) if i.is_dir()])  </span><br><span class="line"># sys.path.insert(0, os.path.abspath(&quot;./../src&quot;))  </span><br><span class="line">  </span><br><span class="line">autosummary_imported_members = False  </span><br><span class="line">autosummary_generate = True  </span><br><span class="line">  </span><br><span class="line">add_module_names = False</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># API Reference  </span></span><br><span class="line">  </span><br><span class="line">this is API guide.  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="code">```&#123;eval-rst&#125;  </span></span><br><span class="line"><span class="code">.. autosummary::  </span></span><br><span class="line"><span class="code">   :toctree:</span></span><br><span class="line"><span class="code">   :recursive:</span></span><br><span class="line"><span class="code">   </span></span><br><span class="line"><span class="code">   WorkEngine.sfs.Aspen  </span></span><br></pre></td></tr></table></figure>
+
+<p>把每个类都手动写上来, 这样生成的调用路径也能是简洁的</p>
+<p><img src="/../../attachments/Pasted%20image%2020240723231116.png"></p>
+<h2 id="Q-为什么autosummary-循环不了-sfs"><a href="#Q-为什么autosummary-循环不了-sfs" class="headerlink" title="Q: 为什么autosummary 循环不了 sfs"></a>Q: 为什么autosummary 循环不了 sfs</h2><p>autosummary 只为module(一个.py文件) 生成 rst 文件,<br>sfs的oss.py 里有一个oss类, 两个名字重名.  __init__.py  导入 oss类 以后 , sfs.oss 会指向oss类  这样autosummary 识别不到sfs&#x2F;oss.py</p>
+<h2 id="apidoc-没法自定义路径"><a href="#apidoc-没法自定义路径" class="headerlink" title="apidoc 没法自定义路径"></a>apidoc 没法自定义路径</h2><p>sfs.aspen.aspen 改不成 sfs.aspen<br>因为 apidoc 最深生成到module, 使用 automodule, 如果 automodule 可以自定义了路径就可以解决</p>
+<p>使用黑名单把不是api 开头的不读取行不行?</p>
+<h2 id="使用-all-加上autosummary"><a href="#使用-all-加上autosummary" class="headerlink" title="使用__all__ 加上autosummary"></a>使用__all__ 加上autosummary</h2><p>这样是不是增加新类时不用改动 autosummary ,改动__all__ 就可以了?<br>但这样加一个类时, 不能去其他地方马上调用, 还得改__all__ 才可以</p>
+<h2 id="波浪号的作用"><a href="#波浪号的作用" class="headerlink" title="波浪号的作用"></a>波浪号的作用</h2><p>显不显示前缀</p>
+<p><img src="/../../attachments/Pasted%20image%2020241112225052.png"><br><img src="/../../attachments/Pasted%20image%2020241112225116.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">work\_engine.sfs.Aspen  </span><br><span class="line">======================  </span><br><span class="line">  </span><br><span class="line">.. currentmodule:: work_engine.sfs  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">.. autoclass:: work_engine.sfs.Aspen  </span><br><span class="line">    :show-inheritance:  </span><br><span class="line">    :members:</span><br><span class="line">    :undoc-members:</span><br><span class="line">    :special-members:</span><br><span class="line">    </span><br><span class="line">.. autoattribute:: Aspen.sys_name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="docsting没有3引号对齐-web端显示为引用"><a href="#docsting没有3引号对齐-web端显示为引用" class="headerlink" title="docsting没有3引号对齐, web端显示为引用"></a>docsting没有3引号对齐, web端显示为引用</h2><p><img src="/../../attachments/Pasted%20image%2020241113003233.png"></p>
+<p><img src="/../../attachments/Pasted%20image%2020241113003322.png"></p>
+<p>class 具体的展示不要放在 module.rst模板里, 因为里面的  没有更多的参数, 可以使用 autosummary, 转到class.rst 模板处理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">.. automodule:: work_engine.sfs  </span><br><span class="line">   :members:  </span><br><span class="line">   :imported-members:</span><br><span class="line">   :member-order: bysource  </span><br><span class="line">  </span><br><span class="line">      SFSWork</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面生成:</p>
+<p><img src="/../../attachments/Pasted%20image%2020241125221715.png"><br>api式的通过:imported-members:导入.  SFSWork  写在下面导入, 如果 conf.py 中</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sphinx/" rel="tag"># sphinx</a>
+              <a href="/tags/mkdocs/" rel="tag"># mkdocs</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/27/SQL/%E8%BF%9E%E7%BB%AD%E6%8A%A5%E5%87%BA%E5%87%A0%E5%A4%A9/" rel="prev" title="连续报出几天">
+      <i class="fa fa-chevron-left"></i> 连续报出几天
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/05/29/SQL/%E8%BF%9E%E7%BB%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0/" rel="next" title="连续出现次数">
+      连续出现次数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mkdocs"><span class="nav-number">1.</span> <span class="nav-text">mkdocs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sphinx"><span class="nav-number">2.</span> <span class="nav-text">sphinx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E7%94%A8md"><span class="nav-number">2.2.</span> <span class="nav-text">启用md</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sphinx-apidoc"><span class="nav-number">3.</span> <span class="nav-text">sphinx-apidoc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-%E4%B8%BA%E4%BB%80%E4%B9%88autosummary-%E5%BE%AA%E7%8E%AF%E4%B8%8D%E4%BA%86-sfs"><span class="nav-number">3.1.</span> <span class="nav-text">Q: 为什么autosummary 循环不了 sfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apidoc-%E6%B2%A1%E6%B3%95%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B7%AF%E5%BE%84"><span class="nav-number">3.2.</span> <span class="nav-text">apidoc 没法自定义路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-all-%E5%8A%A0%E4%B8%8Aautosummary"><span class="nav-number">3.3.</span> <span class="nav-text">使用__all__ 加上autosummary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A2%E6%B5%AA%E5%8F%B7%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.4.</span> <span class="nav-text">波浪号的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docsting%E6%B2%A1%E6%9C%893%E5%BC%95%E5%8F%B7%E5%AF%B9%E9%BD%90-web%E7%AB%AF%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%BC%95%E7%94%A8"><span class="nav-number">3.5.</span> <span class="nav-text">docsting没有3引号对齐, web端显示为引用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DongKa</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DongKa</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
